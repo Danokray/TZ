@@ -1,0 +1,442 @@
+.paymentsSection {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.titleBar {
+  width: 4px;
+  height: 30px;
+  background: #0147FF;
+  border-radius: 2px;
+  margin-right: 15px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+  flex: 1;
+}
+
+.filterContainer {
+  position: relative;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: #e9ecef;
+    border-color: #0147FF;
+  }
+}
+
+.filterIcon {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.filterDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  min-width: 250px;
+  margin-top: 5px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 15px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  select,
+  input {
+    padding: 8px 12px;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #495057;
+    background: white;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #0147FF;
+    }
+  }
+
+  input {
+    &::placeholder {
+      color: #adb5bd;
+    }
+  }
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.paymentsTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background: #f8f9fa;
+  }
+}
+
+.paymentsTable {
+  thead {
+    background: #f8f9fa;
+  }
+
+  th {
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f8f9fa;
+    vertical-align: middle;
+  }
+}
+
+.employeeCell {
+  min-width: 200px;
+}
+
+.employeeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.employeeName {
+  font-weight: 600;
+  color: #212529;
+  font-size: 14px;
+}
+
+.employeeEmail {
+  font-size: 12px;
+  color: #6c757d;
+  display: block;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.paid {
+  color: #28a745;
+
+  .statusDot {
+    background: #28a745;
+  }
+}
+
+.unpaid {
+  color: #dc3545;
+
+  .statusDot {
+    background: #dc3545;
+  }
+}
+
+.progressContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 120px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #28a745, #20c997);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  font-size: 12px;
+  font-weight: 600;
+  color: #495057;
+  min-width: 35px;
+}
+
+.viewButton {
+  background: #0147FF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #0039CC;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(1, 71, 255, 0.3);
+  }
+}
+
+.noData {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .paymentsSection {
+    width: 350px;
+    height: 400px;
+    max-width: 350px;
+    margin: 5px auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .paymentsTable {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tableRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .employeeInfo {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .employeeAvatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border: 2px solid #0147FF;
+    border-radius: 50%;
+    margin-top: 2px;
+  }
+
+  .employeeDetails {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .employeeName {
+    display: none;
+  }
+
+  .employeeEmail {
+    display: none !important;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    background: #fef2f2;
+    padding: 2px 6px;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+    margin-top: 2px;
+  }
+
+  .statusDot {
+    width: 4px;
+    height: 4px;
+    background: #dc2626;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .statusText {
+    color: #dc2626;
+    font-weight: 500;
+  }
+
+  .statusPaid {
+    background: #dcfce7;
+    border-color: #bbf7d0;
+    
+    .statusDot {
+      background: #28a745;
+    }
+    
+    .statusText {
+      color: #166534;
+    }
+  }
+
+  .progressContainer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 50px;
+    margin-top: 2px;
+  }
+
+  .progressBar {
+    height: 4px;
+    min-width: 30px;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+
+  .progressFill {
+    height: 100%;
+    background: #10b981;
+    border-radius: 2px;
+  }
+
+  .progressText {
+    font-size: 10px;
+    font-weight: 500;
+    color: #6b7280;
+    min-width: 20px;
+  }
+
+  .viewButton {
+    background: transparent;
+    border: none;
+    color: #0147FF;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .viewText {
+    background: transparent;
+    border: none;
+    color: #0147FF;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+}
+
+// Скрыть 4-ю строку на десктопе
+.tableRow:nth-child(4) {
+  display: none;
+}
+
+// Показать 4-ю строку в адаптиве
+@media (max-width: 768px) {
+  .tableRow:nth-child(4) {
+    display: flex;
+  }
+}
+

@@ -1,0 +1,641 @@
+.authPage {
+  width: calc(100vw - 100px);
+  height: calc(100vh - 100px);
+  display: flex;
+  background: white;
+  transition: all 0.3s ease;
+  overflow: hidden; // Убираем скроллы
+  margin: 50px; // Отступы по 50px с каждой стороны
+  border-radius: 10px; // Скругление углов
+
+  &.mobile {
+    flex-direction: column;
+  }
+}
+
+.leftSection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: white;
+  overflow: hidden; // Убираем скроллы
+  height: 100%;
+}
+
+.rightSection {
+  flex: 1;
+  position: relative;
+  background: #f8f9fa;
+  overflow: hidden; // Убираем скроллы
+  height: 100%;
+}
+
+.backgroundImage {
+  width: 100%;
+  height: 100%;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 1.5px;
+}
+
+.formTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.form {
+  .formGroup {
+    margin-bottom: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #000;
+      font-size: 13px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background: white;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+        transform: translateY(-1px);
+      }
+
+      &:hover {
+        border-color: #ced4da;
+      }
+
+      &::placeholder {
+        color: #adb5bd;
+        transition: color 0.3s ease;
+      }
+
+      &:focus::placeholder {
+        color: #6c757d;
+      }
+
+      &.error {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+      }
+    }
+  }
+}
+
+.passwordInput {
+  position: relative;
+
+  input {
+    padding-right: 50px;
+  }
+}
+
+// Общий класс для всех инпутов с иконками
+.formGroup {
+  position: relative;
+}
+
+.passwordInput .errorIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #dc3545;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 3;
+  pointer-events: none;
+  margin-top: -10px; // Немного поднимаем вверх
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  color: #6c757d;
+  transition: var(--transition);
+  border-radius: 4px;
+  z-index: 2;
+
+  &:hover {
+    background: rgba(1, 71, 255, 0.1);
+  }
+}
+
+.eyeIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px;
+  background: #0147FF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+
+  &:hover:not(.disabled) {
+    background: #0039CC;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(1, 71, 255, 0.3);
+  }
+
+  &:active:not(.disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(1, 71, 255, 0.3);
+  }
+
+  &.disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+  }
+
+  // Эффект загрузки
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover:not(.disabled)::before {
+    left: 100%;
+  }
+}
+
+.orText {
+  text-align: center;
+  color: #6c757d;
+  font-size: 13px;
+  margin: 16px 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e9ecef;
+    z-index: 1;
+  }
+
+  &::after {
+    content: 'или';
+    background: white;
+    padding: 0 12px;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.switchButton {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 6px;
+
+  &:hover {
+    color: #0056b3;
+    background: rgba(0, 123, 255, 0.05);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  // Подчеркивание при наведении
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #007bff;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  &:hover::after {
+    width: 60%;
+  }
+}
+
+.error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border: 1px solid #f5c6cb;
+  animation: shake 0.5s ease-in-out;
+}
+
+.fieldError {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  animation: fadeIn 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .authPage {
+    flex-direction: column;
+    width: calc(100vw - 40px);
+    height: calc(100vh - 40px);
+    overflow: hidden;
+    margin: 20px; // Уменьшаем отступы на мобильных
+  }
+
+  .leftSection {
+    flex: 1;
+    padding: 0;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .rightSection {
+    display: none; // Скрываем правую секцию на мобильных
+  }
+
+  .backgroundImage {
+    background: transparent;
+  }
+
+  .carImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .formContainer {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 20px; // Добавляем горизонтальные отступы
+  }
+
+  .logo {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .formTitle {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+
+  .form {
+    .formGroup {
+      margin-bottom: 18px;
+
+      label {
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+
+      input {
+        padding: 12px 14px;
+        font-size: 16px; // Предотвращает зум на iOS
+      }
+    }
+  }
+
+  .submitButton {
+    padding: 14px;
+    font-size: 16px;
+    margin-top: 15px;
+  }
+
+  .orText {
+    margin: 15px 0;
+    font-size: 13px;
+  }
+
+  .switchButton {
+    padding: 10px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .authPage {
+    width: calc(100vw - 30px);
+    height: calc(100vh - 30px);
+    margin: 15px; // Еще меньше отступы на маленьких экранах
+  }
+
+  .leftSection {
+    padding: 0;
+    min-height: calc(100vh - 30px);
+  }
+
+  .rightSection {
+    display: none;
+  }
+
+  .carImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .formContainer {
+    max-width: 100%;
+  }
+
+  .logo {
+    font-size: 18px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .formTitle {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .form {
+    .formGroup {
+      margin-bottom: 16px;
+
+      label {
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      input {
+        padding: 11px 12px;
+        font-size: 16px; // Предотвращает зум на iOS
+        border-radius: 6px;
+      }
+    }
+  }
+
+  .passwordInput {
+    input {
+      padding-right: 45px;
+    }
+  }
+
+  .eyeButton {
+    right: 10px;
+    font-size: 16px;
+  }
+
+  .submitButton {
+    padding: 13px;
+    font-size: 16px;
+    margin-top: 12px;
+    border-radius: 6px;
+  }
+
+  .orText {
+    margin: 12px 0;
+    font-size: 12px;
+  }
+
+  .switchButton {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .error {
+    padding: 10px 12px;
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
+
+  .fieldError {
+    font-size: 11px;
+    margin-top: 3px;
+  }
+}
+
+// Планшеты в портретной ориентации
+@media (max-width: 1024px) and (min-width: 769px) {
+  .leftSection {
+    padding: 30px;
+  }
+
+  .formCard {
+    max-width: 450px;
+    padding: 35px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .formTitle {
+    font-size: 17px;
+  }
+}
+
+// Планшеты в альбомной ориентации
+@media (max-width: 1024px) and (orientation: landscape) {
+  .authPage {
+    flex-direction: row;
+  }
+
+  .rightSection {
+    height: 100vh;
+  }
+
+  .leftSection {
+    min-height: 100vh;
+  }
+}
+
+// Очень маленькие экраны (iPhone SE и подобные)
+@media (max-width: 375px) {
+  .authPage {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 20px);
+    margin: 10px; // Минимальные отступы на очень маленьких экранах
+  }
+
+  .leftSection {
+    padding: 0;
+    min-height: calc(100vh - 20px);
+  }
+
+  .rightSection {
+    display: none;
+  }
+
+  .carImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .formContainer {
+    max-width: 100%;
+  }
+
+  .logo {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .formTitle {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .form {
+    .formGroup {
+      margin-bottom: 14px;
+
+      label {
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+
+      input {
+        padding: 10px 11px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .submitButton {
+    padding: 12px;
+    font-size: 15px;
+    margin-top: 10px;
+  }
+
+  .orText {
+    margin: 10px 0;
+    font-size: 11px;
+  }
+
+  .switchButton {
+    padding: 7px;
+    font-size: 13px;
+  }
+}
