@@ -43,6 +43,8 @@ export interface Payment {
   status: 'pending' | 'completed' | 'failed' | 'cancelled';
   createdAt: string;
   updatedAt: string;
+  bitrixDealId?: number;
+  stageId?: string;
 }
 
 // Типы для API ответов

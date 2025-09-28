@@ -1,10 +1,11 @@
 import { BitrixWebhook } from '@/types';
+import { getBitrixWebhookUrl } from '@/config/bitrix';
 
 class BitrixService {
   private webhookUrl: string;
 
   constructor() {
-    this.webhookUrl = 'https://b24-lfbuj2.bitrix24.kz/rest/1/ziht4f6iu0rv7myc';
+    this.webhookUrl = getBitrixWebhookUrl();
   }
 
   async handleWebhook(webhookData: BitrixWebhook) {
@@ -78,25 +79,58 @@ class BitrixService {
       throw new Error('Bitrix webhook URL not configured');
     }
 
+    const fullUrl = `${this.webhookUrl}/${method}`;
+    console.log('🌐 Отправляем запрос в Битрикс24:', {
+      url: fullUrl,
+      method: 'POST',
+      data: data
+    });
+
     try {
-      const response = await fetch(`${this.webhookUrl}/${method}`, {
+      // Преобразуем данные в правильный формат для Битрикс24
+      const formData = new URLSearchParams();
+      
+      // Если есть fields, обрабатываем их отдельно
+      if (data.fields) {
+        Object.entries(data.fields).forEach(([key, value]) => {
+          formData.append(`fields[${key}]`, String(value));
+        });
+      }
+      
+      // Добавляем остальные параметры
+      Object.entries(data).forEach(([key, value]) => {
+        if (key !== 'fields') {
+          formData.append(key, String(value));
+        }
+      });
+
+      console.log('📤 Отправляемые данные:', formData.toString());
+
+      const response = await fetch(fullUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: new URLSearchParams({
-          ...data
-        }),
+        body: formData,
+      });
+
+      console.log('📡 Ответ от Битрикс24:', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
       });
 
       if (!response.ok) {
-        throw new Error(`Bitrix API error: ${response.statusText}`);
+        const errorText = await response.text();
+        console.error('❌ Ошибка ответа от Битрикс24:', errorText);
+        throw new Error(`Bitrix API error: ${response.status} ${response.statusText} - ${errorText}`);
       }
 
       const result = await response.json();
+      console.log('✅ Успешный ответ от Битрикс24:', result);
       return result;
     } catch (error) {
-      console.error('Error sending data to Bitrix:', error);
+      console.error('❌ Ошибка отправки данных в Битрикс24:', error);
       throw error;
     }
   }
@@ -134,9 +168,25 @@ class BitrixService {
     phone?: string;
     sourceId?: string;
   }) {
-    return await this.sendToBitrix('crm.contact.add', {
-      fields: contactData
+    console.log('📞 Отправляем запрос в Битрикс24 для создания контакта:', {
+      method: 'crm.contact.add',
+      data: contactData,
+      webhookUrl: this.webhookUrl
     });
+    
+    // Формируем данные в правильном формате для Битрикс24
+    const result = await this.sendToBitrix('crm.contact.add', {
+      fields: {
+        NAME: contactData.name,
+        LAST_NAME: contactData.lastName,
+        EMAIL: contactData.email ? [{ VALUE: contactData.email, VALUE_TYPE: 'WORK' }] : undefined,
+        PHONE: contactData.phone ? [{ VALUE: contactData.phone, VALUE_TYPE: 'WORK' }] : undefined,
+        SOURCE_ID: contactData.sourceId || 'WEB'
+      }
+    });
+    
+    console.log('📞 Ответ от Битрикс24:', result);
+    return result;
   }
 
   async getDeals(filter?: any) {
@@ -188,6 +238,18 @@ class BitrixService {
 
   async getDealStages() {
     return await this.sendToBitrix('crm.dealcategory.stage.list', {});
+  }
+
+  async updateDeal(dealId: number, dealData: any) {
+    console.log('🔄 Обновляем сделку в Битрикс24:', { dealId, dealData });
+    
+    const result = await this.sendToBitrix('crm.deal.update', {
+      id: dealId,
+      fields: dealData
+    });
+    
+    console.log('✅ Сделка обновлена:', result);
+    return result;
   }
 }
 

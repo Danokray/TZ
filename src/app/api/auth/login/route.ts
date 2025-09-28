@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { LoginForm, ApiResponse } from '@/types';
+import database from '@/services/database';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,22 +15,30 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // Моковая авторизация - принимаем любой email/пароль
-    const mockUser = {
-      id: 1,
-      login: 'alim',
-      email: email,
-      firstName: 'Алим',
-      lastName: 'Джолдаспаев',
-      phone: '+7 (123) 456-78-90',
-      address: 'Алматы, Казахстан',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+    // Ищем пользователя по email
+    const user = database.getUserByEmail(email);
+    if (!user) {
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        error: 'Пользователь не найден'
+      }, { status: 401 });
+    }
+
+    // Проверяем пароль
+    const isPasswordValid = await database.verifyPassword(password, user.password);
+    if (!isPasswordValid) {
+      return NextResponse.json<ApiResponse>({
+        success: false,
+        error: 'Неверный пароль'
+      }, { status: 401 });
+    }
+
+    // Убираем пароль из ответа
+    const { password: _, ...userWithoutPassword } = user;
 
     return NextResponse.json<ApiResponse>({
       success: true,
-      data: mockUser,
+      data: userWithoutPassword,
       message: 'Авторизация успешна'
     });
 
