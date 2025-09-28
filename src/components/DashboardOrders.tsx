@@ -58,7 +58,7 @@ export default function DashboardOrders() {
     }
   };
 
-  const totalSlides = 7;
+  const totalSlides = 5;
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % totalSlides);
@@ -79,33 +79,13 @@ export default function DashboardOrders() {
         <h2>Заказы</h2>
       </div>
 
-      {/* 4 карточки документов в ряд */}
-      <div className={styles.ordersGrid}>
-        {mockOrders.map((order) => (
-          <div key={order.id} className={styles.orderCard}>
-            <div className={styles.documentImage}>
-              <img src={order.image} alt={order.serviceDetails} />
-            </div>
-            
-            <div className={styles.orderContent}>
-              <h3 className={styles.serviceDetails}>{order.serviceDetails}</h3>
-              
-              <button className={styles.downloadBtn}>
-                <img src="/images/icons/Mask group.png" alt="Скачать" className={styles.downloadIcon} />
-                Скачать
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Карусель с точками навигации */}
       <div className={styles.carousel}>
         <div 
           className={styles.slidesContainer}
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {Array.from({ length: 7 }).map((_, slideIndex) => (
+          {Array.from({ length: 5 }).map((_, slideIndex) => (
             <div key={slideIndex} className={styles.slide}>
               <div className={styles.ordersGrid}>
                 {mockOrders.map((order) => (
@@ -130,7 +110,7 @@ export default function DashboardOrders() {
         </div>
 
         <div className={styles.dots}>
-          {Array.from({ length: 7 }).map((_, index) => (
+          {Array.from({ length: 5 }).map((_, index) => (
             <button
               key={index}
               className={`${styles.dot} ${index === currentIndex ? styles.active : ''}`}

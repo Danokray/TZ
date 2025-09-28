@@ -17,137 +17,128 @@ const mockOrders: Order[] = [
   {
     id: 1,
     status: 'Выполнен',
-    serviceDetails: 'Ремонт двигателя',
+    serviceDetails: 'Детали услуги',
     orderDate: '15.12.2024'
   },
   {
     id: 2,
     status: 'В процессе',
-    serviceDetails: 'Замена масла',
+    serviceDetails: 'Детали услуги',
     orderDate: '14.12.2024'
   },
   {
     id: 3,
     status: 'Выполнен',
-    serviceDetails: 'Диагностика автомобиля',
+    serviceDetails: 'Детали услуги',
     orderDate: '13.12.2024'
   },
   {
     id: 4,
     status: 'Отменен',
-    serviceDetails: 'Замена тормозных колодок',
+    serviceDetails: 'Детали услуги',
     orderDate: '12.12.2024'
   },
   {
     id: 5,
     status: 'Выполнен',
-    serviceDetails: 'Техническое обслуживание',
+    serviceDetails: 'Детали услуги',
     orderDate: '11.12.2024'
   },
   {
     id: 6,
     status: 'В процессе',
-    serviceDetails: 'Ремонт кондиционера',
+    serviceDetails: 'Детали услуги',
     orderDate: '10.12.2024'
   },
   {
     id: 7,
     status: 'Выполнен',
-    serviceDetails: 'Замена фильтров',
+    serviceDetails: 'Детали услуги',
     orderDate: '09.12.2024'
   },
   {
     id: 8,
     status: 'Выполнен',
-    serviceDetails: 'Проверка тормозной системы',
+    serviceDetails: 'Детали услуги',
     orderDate: '08.12.2024'
   },
   {
     id: 9,
     status: 'В процессе',
-    serviceDetails: 'Ремонт подвески',
+    serviceDetails: 'Детали услуги',
     orderDate: '07.12.2024'
   },
   {
     id: 10,
     status: 'Выполнен',
-    serviceDetails: 'Замена свечей зажигания',
+    serviceDetails: 'Детали услуги',
     orderDate: '06.12.2024'
   },
   {
     id: 11,
     status: 'Выполнен',
-    serviceDetails: 'Диагностика электроники',
+    serviceDetails: 'Детали услуги',
     orderDate: '05.12.2024'
   },
   {
     id: 12,
     status: 'Выполнен',
-    serviceDetails: 'Замена ремня ГРМ',
+    serviceDetails: 'Детали услуги',
     orderDate: '04.12.2024'
   },
   {
     id: 13,
     status: 'В процессе',
-    serviceDetails: 'Ремонт коробки передач',
+    serviceDetails: 'Детали услуги',
     orderDate: '03.12.2024'
   },
   {
     id: 14,
     status: 'Выполнен',
-    serviceDetails: 'Замена аккумулятора',
+    serviceDetails: 'Детали услуги',
     orderDate: '02.12.2024'
   },
   {
     id: 15,
     status: 'Выполнен',
-    serviceDetails: 'Проверка системы охлаждения',
+    serviceDetails: 'Детали услуги',
     orderDate: '01.12.2024'
   },
   {
     id: 16,
     status: 'Выполнен',
-    serviceDetails: 'Замена амортизаторов',
+    serviceDetails: 'Детали услуги',
     orderDate: '30.11.2024'
   },
   {
     id: 17,
     status: 'В процессе',
-    serviceDetails: 'Ремонт рулевого управления',
+    serviceDetails: 'Детали услуги',
     orderDate: '29.11.2024'
   },
   {
     id: 18,
     status: 'Выполнен',
-    serviceDetails: 'Замена тормозной жидкости',
+    serviceDetails: 'Детали услуги',
     orderDate: '28.11.2024'
   },
   {
     id: 19,
     status: 'Выполнен',
-    serviceDetails: 'Проверка системы зажигания',
+    serviceDetails: 'Детали услуги',
     orderDate: '27.11.2024'
   },
   {
     id: 20,
     status: 'Выполнен',
-    serviceDetails: 'Замена топливного фильтра',
+    serviceDetails: 'Детали услуги',
     orderDate: '26.11.2024'
   }
 ];
 
 export function Orders({ onRepeatOrder }: OrdersProps) {
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Выполнен':
-        return '#10B981';
-      case 'В процессе':
-        return '#F59E0B';
-      case 'Отменен':
-        return '#EF4444';
-      default:
-        return '#6B7280';
-    }
+    return '#0147FF';
   };
 
   return (
@@ -166,7 +157,7 @@ export function Orders({ onRepeatOrder }: OrdersProps) {
           
           <div className={styles.orderContent}>
             <h3 className={styles.serviceDetails}>{order.serviceDetails}</h3>
-            <p className={styles.orderDate}>Дата заказа: {order.orderDate}</p>
+            <p className={styles.orderDate}>Дата заказа</p>
           </div>
           
           <button 
