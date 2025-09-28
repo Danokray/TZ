@@ -1,173 +1,112 @@
-# TechZ Project
+TechZ Project
 
-Тестовый проект на Next.js с интеграцией Bitrix24 API.
+Тестовый проект на Next.js с подключением к Bitrix24 API.
 
-## Технологии
+Технологии
 
-- **Next.js 14** - React фреймворк
-- **TypeScript** - типизация
-- **SCSS модули** - стилизация
-- **Swiper** - слайдер на дашборде
-- **better-sqlite3** - база данных
-- **Bitrix24 API** - интеграция через вебхук
+Next.js 14
 
-## Структура проекта
+TypeScript
 
-```
-src/
-├── app/                    # App Router (Next.js 13+)
-│   ├── api/               # API роуты
-│   │   ├── auth/          # Авторизация
-│   │   ├── bitrix/        # Bitrix24 интеграция
-│   │   └── dashboard/     # Дашборд API
-│   ├── auth/              # Страница авторизации
-│   ├── dashboard/         # Дашборд
-│   ├── payments/          # Управление платежами
-│   ├── layout.tsx         # Основной layout
-│   └── page.tsx           # Главная страница
-├── components/            # React компоненты
-├── services/              # Сервисы
-│   ├── database.ts        # Работа с БД
-│   └── bitrix.ts          # Bitrix24 API
-├── styles/                # Глобальные стили
-│   └── globals.scss       # Основные стили
-└── types/                 # TypeScript типы
-    └── index.ts           # Основные типы
-```
+SCSS модули
 
-## Установка и запуск
+Swiper (слайдер на дашборде)
 
-1. **Установка зависимостей:**
-   ```bash
-   npm install
-   ```
+better-sqlite3 (локальная база)
 
-2. **Настройка переменных окружения:**
-   Создайте файл `.env.local` в корне проекта:
-   ```env
-   BITRIX_WEBHOOK_URL=https://your-domain.bitrix24.ru/rest/1/your-webhook-code
-   BITRIX_API_KEY=your-api-key-here
-   DATABASE_PATH=./database.sqlite
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your-secret-key-here
-   ```
+Bitrix24 API через вебхук
 
-3. **Запуск в режиме разработки:**
-   ```bash
-   npm run dev
-   ```
+Структура
 
-4. **Открыть в браузере:**
-   http://localhost:3000
+src/app/ → страницы и API роуты
 
-## Функциональность
+auth — регистрация/авторизация
 
-### Страницы
+dashboard — дашборд
 
-1. **Авторизация/Регистрация** (`/auth`)
-   - Форма входа
-   - Форма регистрации
-   - Валидация данных
-   - Сохранение в localStorage
+payments — платежи
 
-2. **Дашборд** (`/dashboard`)
-   - Статистика пользователей и платежей
-   - Слайдер с новостями
-   - Последние платежи
-   - Навигация
+components/ → React-компоненты
 
-3. **Платежи** (`/payments`)
-   - Список платежей
-   - Создание новых платежей
-   - Управление статусами
-   - Адаптивный дизайн
+services/ → работа с БД и Bitrix API
 
-### API Endpoints
+styles/ → SCSS
 
-- `POST /api/auth/login` - Авторизация
-- `POST /api/auth/register` - Регистрация
-- `GET /api/dashboard/stats` - Статистика дашборда
-- `POST /api/bitrix/webhook` - Bitrix24 вебхук
+types/ → типы TS
 
-### База данных
+Как запустить
 
-Используется SQLite с таблицами:
-- `users` - пользователи
-- `payments` - платежи
+Установить зависимости:
 
-## Интеграция с Bitrix24
+npm install
+Настроить .env.local:
+BITRIX_WEBHOOK_URL=ссылка-на-вебхук
+DATABASE_PATH=./database.sqlite
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=секрет
+Запуск:
+npm run dev
+Открыть в браузере: http://localhost:3000
+Страницы
+Auth — вход и регистрация, валидация, сохранение пользователя.
+Dashboard — статистика, слайдер (Swiper), последние платежи, блок «Профиль».
+Payments — список платежей, кнопка «Оплатить», работа с API Битрикс.
+API роуты
 
-### Настройка вебхука
+POST /api/auth/login — авторизация
 
-1. В Bitrix24 создайте входящий вебхук
-2. Укажите URL: `https://your-domain.com/api/bitrix/webhook`
-3. Выберите права доступа
-4. Скопируйте URL вебхука в переменную `BITRIX_WEBHOOK_URL`
+POST /api/auth/register — регистрация
 
-### Поддерживаемые события
+GET /api/dashboard/stats — статистика
 
-- `ONCRMDEALADD` - добавление сделки
-- `ONCRMDEALUPDATE` - обновление сделки
-- `ONCRMLEADADD` - добавление лида
-- `ONCRMLEADUPDATE` - обновление лида
+POST /api/bitrix/webhook — интеграция с Bitrix
 
-## Адаптивность
+База данных
 
-Проект полностью адаптивен:
-- Desktop (1200px+)
-- Tablet (768px - 1199px)
-- Mobile (до 767px)
+SQLite (better-sqlite3):
 
-## Стилизация
+users — пользователи
 
-- SCSS модули для каждого компонента
-- CSS переменные для цветов и размеров
-- Адаптивная сетка
-- Современный дизайн с градиентами и тенями
+payments — платежи
 
-## Безопасность
+Bitrix24
 
-⚠️ **Важно для продакшена:**
-- Используйте bcrypt для хеширования паролей
-- Настройте JWT токены вместо localStorage
-- Добавьте CORS настройки
-- Используйте HTTPS
-- Настройте rate limiting
+Вебхук в CRM с нужными правами.
 
-## Разработка
+Поддержка событий: сделки, лиды (добавление/обновление).
 
-### Добавление новых страниц
+Адаптивность
 
-1. Создайте папку в `src/app/`
-2. Добавьте `page.tsx` и `page.module.scss`
-3. Настройте роутинг в `layout.tsx` если нужно
+Проект работает на:
 
-### Добавление API роутов
+Desktop
 
-1. Создайте папку в `src/app/api/`
-2. Добавьте `route.ts` с методами GET/POST
-3. Используйте типы из `src/types/`
+Tablet
 
-### Работа с базой данных
+Mobile
 
-Используйте сервис `database.ts`:
-```typescript
-import database from '@/services/database';
+Стили
 
-// Создание пользователя
-const user = database.createUser(userData);
+SCSS модули + CSS переменные.
 
-// Получение пользователя
-const user = database.getUserByEmail(email);
-```
+Безопасность
 
-## Сборка для продакшена
+Хеширование паролей через bcrypt
 
-```bash
+JWT вместо localStorage
+
+CORS + HTTPS
+
+Rate limiting
+
+Разработка
+
+Новая страница → папка в src/app/ + page.tsx.
+
+Новый API роут → src/app/api/ + route.ts.
+
+Работа с БД через services/database.ts.
+
+Сборка
 npm run build
 npm start
-```
-
-## Лицензия
-
-MIT
