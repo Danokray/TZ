@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Navigation from '@/components/Navigation';
 import styles from './page.module.scss';
 import { Payment, User } from '@/types';
 
@@ -16,7 +17,7 @@ export default function PaymentsPage() {
     amount: '',
     currency: 'RUB',
     description: '',
-    status: 'pending' as const
+    status: 'pending' as 'pending' | 'completed' | 'failed' | 'cancelled'
   });
 
   useEffect(() => {
@@ -31,39 +32,93 @@ export default function PaymentsPage() {
     loadPayments();
   }, [router]);
 
-  const loadPayments = async () => {
-    try {
-      // В реальном проекте здесь был бы API для получения платежей пользователя
-      // Пока используем моковые данные
-      const mockPayments: Payment[] = [
+  const loadPayments = () => {
+    // Моковые данные для таблицы платежей
+    const mockPayments: Payment[] = [
         {
           id: 1,
           userId: 1,
-          amount: 1500,
-          currency: 'RUB',
-          description: 'Оплата за услуги',
-          status: 'completed',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'pending',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
         },
         {
           id: 2,
           userId: 1,
-          amount: 2500,
-          currency: 'RUB',
-          description: 'Подписка на месяц',
-          status: 'pending',
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-          updatedAt: new Date(Date.now() - 86400000).toISOString()
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'completed',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
+        },
+        {
+          id: 3,
+          userId: 1,
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'completed',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
+        },
+        {
+          id: 4,
+          userId: 1,
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'completed',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
+        },
+        {
+          id: 5,
+          userId: 1,
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'completed',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
+        },
+        {
+          id: 6,
+          userId: 1,
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'completed',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
+        },
+        {
+          id: 7,
+          userId: 1,
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'completed',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
+        },
+        {
+          id: 8,
+          userId: 1,
+          amount: 15000,
+          currency: 'KZT',
+          description: '321312321',
+          status: 'completed',
+          createdAt: new Date('2025-03-16').toISOString(),
+          updatedAt: new Date('2025-03-16').toISOString()
         }
-      ];
-      
-      setPayments(mockPayments);
-    } catch (error) {
-      console.error('Error loading payments:', error);
-    } finally {
-      setLoading(false);
-    }
+    ];
+    
+    setPayments(mockPayments);
+    setLoading(false);
   };
 
   const handleCreatePayment = async (e: React.FormEvent) => {
@@ -107,8 +162,8 @@ export default function PaymentsPage() {
 
   const getStatusText = (status: Payment['status']) => {
     switch (status) {
-      case 'completed': return 'Завершен';
-      case 'pending': return 'Ожидает';
+      case 'completed': return 'Оплачено';
+      case 'pending': return 'Не оплачено';
       case 'failed': return 'Ошибка';
       case 'cancelled': return 'Отменен';
       default: return status;
@@ -128,166 +183,51 @@ export default function PaymentsPage() {
 
   return (
     <div className={styles.paymentsPage}>
-      <header className={styles.header}>
-        <div className="container">
-          <div className={styles.headerContent}>
-            <div className={styles.headerLeft}>
-              <button 
-                onClick={() => router.push('/dashboard')}
-                className={styles.backButton}
-              >
-                ← Назад
-              </button>
-              <h1>Платежи</h1>
-            </div>
-            <button 
-              onClick={() => setShowCreateForm(true)}
-              className="btn btn--primary"
-            >
-              Создать платеж
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navigation />
 
       <main className={styles.main}>
-        <div className="container">
-          {/* Форма создания платежа */}
-          {showCreateForm && (
-            <div className={styles.createForm}>
-              <div className={styles.formHeader}>
-                <h2>Создать новый платеж</h2>
-                <button 
-                  onClick={() => setShowCreateForm(false)}
-                  className={styles.closeButton}
-                >
-                  ×
-                </button>
-              </div>
-              
-              <form onSubmit={handleCreatePayment} className={styles.form}>
-                <div className="form-group">
-                  <label htmlFor="amount">Сумма</label>
-                  <input
-                    type="number"
-                    id="amount"
-                    value={newPayment.amount}
-                    onChange={(e) => setNewPayment({ ...newPayment, amount: e.target.value })}
-                    required
-                    placeholder="Введите сумму"
-                    min="0"
-                    step="0.01"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="currency">Валюта</label>
-                  <select
-                    id="currency"
-                    value={newPayment.currency}
-                    onChange={(e) => setNewPayment({ ...newPayment, currency: e.target.value })}
-                  >
-                    <option value="RUB">RUB</option>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="description">Описание</label>
-                  <textarea
-                    id="description"
-                    value={newPayment.description}
-                    onChange={(e) => setNewPayment({ ...newPayment, description: e.target.value })}
-                    required
-                    placeholder="Введите описание платежа"
-                    rows={3}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="status">Статус</label>
-                  <select
-                    id="status"
-                    value={newPayment.status}
-                    onChange={(e) => setNewPayment({ ...newPayment, status: e.target.value as Payment['status'] })}
-                  >
-                    <option value="pending">Ожидает</option>
-                    <option value="completed">Завершен</option>
-                    <option value="failed">Ошибка</option>
-                    <option value="cancelled">Отменен</option>
-                  </select>
-                </div>
-
-                <div className={styles.formActions}>
-                  <button 
-                    type="button"
-                    onClick={() => setShowCreateForm(false)}
-                    className="btn btn--secondary"
-                  >
-                    Отмена
-                  </button>
-                  <button 
-                    type="submit"
-                    className="btn btn--primary"
-                  >
-                    Создать
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
-
-          {/* Список платежей */}
-          <div className={styles.paymentsList}>
-            <h2>Список платежей</h2>
-            
-            {payments.length > 0 ? (
-              <div className={styles.paymentsGrid}>
+        <h1 className={styles.pageTitle}>Платежи</h1>
+        
+        {/* Таблица платежей */}
+        <div className={styles.paymentsTable}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Номер счета</th>
+                  <th>Дата</th>
+                  <th>Сумма</th>
+                  <th>Статус</th>
+                  <th>Действие</th>
+                </tr>
+              </thead>
+              <tbody>
                 {payments.map((payment) => (
-                  <div key={payment.id} className={styles.paymentCard}>
-                    <div className={styles.paymentHeader}>
-                      <h3>{payment.description}</h3>
+                  <tr key={payment.id}>
+                    <td>{payment.description}</td>
+                    <td>{new Date(payment.createdAt).toLocaleDateString('ru-RU')}</td>
+                    <td>{payment.amount.toLocaleString('ru-RU')} {payment.currency}</td>
+                    <td>
                       <span 
                         className={styles.status}
-                        style={{ backgroundColor: getStatusColor(payment.status) }}
+                        style={{ 
+                          color: payment.status === 'completed' ? 'rgba(1, 71, 255, 0.4)' : '#1f2937',
+                          backgroundColor: 'transparent'
+                        }}
                       >
                         {getStatusText(payment.status)}
                       </span>
-                    </div>
-                    
-                    <div className={styles.paymentDetails}>
-                      <div className={styles.amount}>
-                        <span className={styles.amountValue}>
-                          {payment.amount} {payment.currency}
-                        </span>
-                      </div>
-                      
-                      <div className={styles.date}>
-                        <span>Создан:</span>
-                        <span>{new Date(payment.createdAt).toLocaleDateString('ru-RU')}</span>
-                      </div>
-                      
-                      <div className={styles.date}>
-                        <span>Обновлен:</span>
-                        <span>{new Date(payment.updatedAt).toLocaleDateString('ru-RU')}</span>
-                      </div>
-                    </div>
-                  </div>
+                    </td>
+                    <td>
+                      {payment.status === 'pending' ? (
+                        <button className={styles.payButton}>
+                          Оплатить
+                        </button>
+                      ) : null}
+                    </td>
+                  </tr>
                 ))}
-              </div>
-            ) : (
-              <div className={styles.noPayments}>
-                <p>Платежей пока нет</p>
-                <button 
-                  onClick={() => setShowCreateForm(true)}
-                  className="btn btn--primary"
-                >
-                  Создать первый платеж
-                </button>
-              </div>
-            )}
-          </div>
+              </tbody>
+            </table>
         </div>
       </main>
     </div>

@@ -1,0 +1,287 @@
+.dashboardOrders {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 900px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: -20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .blueBar {
+    width: 4px;
+    height: 24px;
+    background: #0147FF;
+    border-radius: 2px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+  }
+}
+
+// Сетка из 4 документов в ряд
+.ordersGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.orderCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.2s ease;
+  width: 192px;
+  height: 252px;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.documentImage {
+  width: 177px;
+  height: 151px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  margin-left: -5px;
+  flex-shrink: 0;
+
+  img {
+    width: 177px;
+    height: 151px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+}
+
+.orderContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.serviceDetails {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  line-height: 1.4;
+  text-align: left;
+  margin-top: -8px;
+}
+
+.downloadBtn {
+  background: #0147FF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 178px;
+  height: 27px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  margin-left: -10px;
+  position: absolute;
+  bottom: 11px;
+
+  &:hover {
+    background: #0039CC;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.downloadIcon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+// Карусель
+.carousel {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.slidesContainer {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.slide {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  border: none;
+  background: #d1d5db;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #9ca3af;
+  }
+
+  &.active {
+    width: 24px;
+    height: 12px;
+    background: #0147FF;
+  }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .dashboardOrders {
+    width: 350px;
+    height: 500px;
+    padding: 16px;
+    gap: 16px;
+    margin: 5px auto;
+  }
+
+  .header h2 {
+    font-size: 18px;
+  }
+
+  .ordersGrid {
+    display: flex;
+    gap: 12px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .orderCard {
+    min-width: 300px;
+    width: 300px;
+    height: 200px;
+    padding: 12px;
+    flex-shrink: 0;
+  }
+
+  .documentImage {
+    width: 118px;
+    height: 100px;
+  }
+
+  .serviceDetails {
+    font-size: 12px;
+  }
+
+  .downloadBtn {
+    width: 118px;
+    height: 25px;
+    padding: 0;
+    font-size: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .carousel {
+    margin-top: 12px;
+  }
+
+  .carousel .ordersGrid {
+    display: flex;
+    gap: 12px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .carousel .orderCard {
+    min-width: 300px;
+    width: 300px;
+    height: 200px;
+    padding: 12px;
+    flex-shrink: 0;
+  }
+
+  .carousel .documentImage {
+    width: 118px;
+    height: 100px;
+  }
+
+  .carousel .downloadBtn {
+    width: 118px;
+    height: 25px;
+    padding: 0;
+    font-size: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orderCard {
+    min-width: 280px;
+    width: 280px;
+  }
+
+  .documentImage {
+    width: 108px;
+  }
+
+  .downloadBtn {
+    width: 108px;
+    left: 12px;
+  }
+
+  .carousel .orderCard {
+    min-width: 280px;
+    width: 280px;
+  }
+
+  .carousel .documentImage {
+    width: 108px;
+  }
+
+  .carousel .downloadBtn {
+    width: 108px;
+    left: 12px;
+  }
+}

@@ -1,233 +1,191 @@
 'use client';
 
-import { useState } from 'react';
 import styles from './OrdersSection.module.scss';
 
 interface Order {
   id: number;
-  title: string;
-  image: string;
+  status: string;
+  serviceDetails: string;
+  orderDate: string;
 }
 
 interface OrdersProps {
-  onDownload: (orderId: number) => void;
+  onRepeatOrder: (orderId: number) => void;
 }
 
 const mockOrders: Order[] = [
   {
     id: 1,
-    title: 'Счета на оплату для Юр. Лиц',
-    image: '/images/order1.png'
+    status: 'Выполнен',
+    serviceDetails: 'Ремонт двигателя',
+    orderDate: '15.12.2024'
   },
   {
     id: 2,
-    title: 'Гарантия на детали для переднего бампера',
-    image: '/images/order2.png'
+    status: 'В процессе',
+    serviceDetails: 'Замена масла',
+    orderDate: '14.12.2024'
   },
   {
     id: 3,
-    title: 'Чеки для Физ.лиц',
-    image: '/images/order3.png'
+    status: 'Выполнен',
+    serviceDetails: 'Диагностика автомобиля',
+    orderDate: '13.12.2024'
   },
   {
     id: 4,
-    title: 'Счета на оплату для Юр. Лиц',
-    image: '/images/order4.png'
+    status: 'Отменен',
+    serviceDetails: 'Замена тормозных колодок',
+    orderDate: '12.12.2024'
   },
   {
     id: 5,
-    title: 'Договор на поставку запчастей',
-    image: '/images/order1.png'
+    status: 'Выполнен',
+    serviceDetails: 'Техническое обслуживание',
+    orderDate: '11.12.2024'
   },
   {
     id: 6,
-    title: 'Акт выполненных работ',
-    image: '/images/order2.png'
+    status: 'В процессе',
+    serviceDetails: 'Ремонт кондиционера',
+    orderDate: '10.12.2024'
   },
   {
     id: 7,
-    title: 'Счет-фактура №12345',
-    image: '/images/order3.png'
+    status: 'Выполнен',
+    serviceDetails: 'Замена фильтров',
+    orderDate: '09.12.2024'
   },
   {
     id: 8,
-    title: 'Накладная на товар',
-    image: '/images/order4.png'
+    status: 'Выполнен',
+    serviceDetails: 'Проверка тормозной системы',
+    orderDate: '08.12.2024'
   },
   {
     id: 9,
-    title: 'Справка о проведенном ремонте',
-    image: '/images/order1.png'
+    status: 'В процессе',
+    serviceDetails: 'Ремонт подвески',
+    orderDate: '07.12.2024'
   },
   {
     id: 10,
-    title: 'Смета на запчасти',
-    image: '/images/order2.png'
+    status: 'Выполнен',
+    serviceDetails: 'Замена свечей зажигания',
+    orderDate: '06.12.2024'
   },
   {
     id: 11,
-    title: 'Протокол диагностики',
-    image: '/images/order3.png'
+    status: 'Выполнен',
+    serviceDetails: 'Диагностика электроники',
+    orderDate: '05.12.2024'
   },
   {
     id: 12,
-    title: 'Договор на техническое обслуживание',
-    image: '/images/order4.png'
+    status: 'Выполнен',
+    serviceDetails: 'Замена ремня ГРМ',
+    orderDate: '04.12.2024'
   },
   {
     id: 13,
-    title: 'Акт приема-передачи автомобиля',
-    image: '/images/order1.png'
+    status: 'В процессе',
+    serviceDetails: 'Ремонт коробки передач',
+    orderDate: '03.12.2024'
   },
   {
     id: 14,
-    title: 'Счет на оплату услуг',
-    image: '/images/order2.png'
+    status: 'Выполнен',
+    serviceDetails: 'Замена аккумулятора',
+    orderDate: '02.12.2024'
   },
   {
     id: 15,
-    title: 'Гарантийный талон',
-    image: '/images/order3.png'
+    status: 'Выполнен',
+    serviceDetails: 'Проверка системы охлаждения',
+    orderDate: '01.12.2024'
   },
   {
     id: 16,
-    title: 'Инструкция по эксплуатации',
-    image: '/images/order4.png'
+    status: 'Выполнен',
+    serviceDetails: 'Замена амортизаторов',
+    orderDate: '30.11.2024'
   },
   {
     id: 17,
-    title: 'Сертификат качества',
-    image: '/images/order1.png'
+    status: 'В процессе',
+    serviceDetails: 'Ремонт рулевого управления',
+    orderDate: '29.11.2024'
   },
   {
     id: 18,
-    title: 'Декларация соответствия',
-    image: '/images/order2.png'
+    status: 'Выполнен',
+    serviceDetails: 'Замена тормозной жидкости',
+    orderDate: '28.11.2024'
   },
   {
     id: 19,
-    title: 'Паспорт изделия',
-    image: '/images/order3.png'
+    status: 'Выполнен',
+    serviceDetails: 'Проверка системы зажигания',
+    orderDate: '27.11.2024'
   },
   {
     id: 20,
-    title: 'Сертификат безопасности',
-    image: '/images/order4.png'
-  },
-  {
-    id: 21,
-    title: 'Протокол испытаний',
-    image: '/images/order1.png'
-  },
-  {
-    id: 22,
-    title: 'Акт ввода в эксплуатацию',
-    image: '/images/order2.png'
-  },
-  {
-    id: 23,
-    title: 'Техническое задание',
-    image: '/images/order3.png'
-  },
-  {
-    id: 24,
-    title: 'Коммерческое предложение',
-    image: '/images/order4.png'
-  },
-  {
-    id: 25,
-    title: 'Договор на гарантийное обслуживание',
-    image: '/images/order1.png'
-  },
-  {
-    id: 26,
-    title: 'Счет-фактура №54321',
-    image: '/images/order2.png'
-  },
-  {
-    id: 27,
-    title: 'Накладная на возврат',
-    image: '/images/order3.png'
-  },
-  {
-    id: 28,
-    title: 'Акт списания материалов',
-    image: '/images/order4.png'
+    status: 'Выполнен',
+    serviceDetails: 'Замена топливного фильтра',
+    orderDate: '26.11.2024'
   }
 ];
 
-export function Orders({ onDownload }: OrdersProps) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const itemsPerSlide = 4;
-  const totalSlides = Math.ceil(mockOrders.length / itemsPerSlide);
-
-  const goToSlide = (slideIndex: number) => {
-    setCurrentSlide(slideIndex);
-  };
-
-  const getCurrentOrders = () => {
-    const startIndex = currentSlide * itemsPerSlide;
-    return mockOrders.slice(startIndex, startIndex + itemsPerSlide);
+export function Orders({ onRepeatOrder }: OrdersProps) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'Выполнен':
+        return '#10B981';
+      case 'В процессе':
+        return '#F59E0B';
+      case 'Отменен':
+        return '#EF4444';
+      default:
+        return '#6B7280';
+    }
   };
 
   return (
-    <div className={styles.ordersSection}>
-      <div className={styles.sectionHeader}>
-        <div className={styles.sectionTitle}>Заказы</div>
-      </div>
-      
-      <div className={styles.ordersContainer}>
-        {getCurrentOrders().map(order => (
-          <div key={order.id} className={styles.orderCard}>
-            <div className={styles.orderImage}>
-              <img 
-                src={order.image} 
-                alt="Документ"
-                className={styles.documentImage}
-                loading="lazy"
-                decoding="async"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                  if (nextElement) {
-                    nextElement.style.display = 'flex';
-                  }
-                }}
-              />
-              <div className={styles.documentPreview}>
-                <div className={styles.documentIcon}>📄</div>
-              </div>
+    <div className={styles.ordersGrid}>
+      {mockOrders.map(order => (
+        <div key={order.id} className={styles.orderCard}>
+          <div className={styles.orderHeader}>
+            <div className={styles.statusIndicator}>
+              <div 
+                className={styles.statusDot} 
+                style={{ backgroundColor: getStatusColor(order.status) }}
+              ></div>
+              <span className={styles.statusText}>Статус</span>
             </div>
-            <div className={styles.orderTitle}>{order.title}</div>
-            <button 
-              className={styles.downloadBtn}
-              onClick={() => onDownload(order.id)}
-            >
-              <img src="/images/icons/Mask group.png" alt="Download" className={styles.downloadIconImg} />
-              <span>Скачать</span>
-            </button>
           </div>
-        ))}
-      </div>
-
-      <div className={styles.sliderDots}>
-        {Array.from({ length: totalSlides }, (_, index) => (
-          <button
-            key={index}
-            className={`${styles.dot} ${currentSlide === index ? styles.activeDot : ''}`}
-            onClick={() => goToSlide(index)}
-          />
-        ))}
-      </div>
+          
+          <div className={styles.orderContent}>
+            <h3 className={styles.serviceDetails}>{order.serviceDetails}</h3>
+            <p className={styles.orderDate}>Дата заказа: {order.orderDate}</p>
+          </div>
+          
+          <button 
+            className={styles.repeatOrderBtn}
+            onClick={() => onRepeatOrder(order.id)}
+          >
+            Повторить заказ
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
 
 export default function OrdersSection() {
-  const handleDownload = (orderId: number) => {
-    console.log(`Downloading order ${orderId}`);
-    // Здесь будет логика скачивания
+  const handleRepeatOrder = (orderId: number) => {
+    console.log(`Repeating order ${orderId}`);
+    // Здесь будет логика повторения заказа
   };
 
-  return <Orders onDownload={handleDownload} />;
+  return <Orders onRepeatOrder={handleRepeatOrder} />;
 }

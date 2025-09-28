@@ -1,17 +1,12 @@
 'use client';
 
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/Navigation';
+import { ProfileLarge } from '@/components/ProfileLarge';
 import styles from './page.module.scss';
 
-// Ленивая загрузка тяжелых компонентов
-const DashboardOrders = lazy(() => import('@/components/DashboardOrders'));
-const ProfileSection = lazy(() => import('@/components/ProfileSection'));
-const StreamSection = lazy(() => import('@/components/StreamSection'));
-const PaymentsSection = lazy(() => import('@/components/PaymentsSection'));
-
-export default function DashboardPage() {
+export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -91,34 +86,11 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className={styles.dashboard}>
+    <div className={styles.profilePage}>
       <Navigation />
+      
       <div className={styles.content}>
-        <div className={styles.welcome}>
-          <h1>Привет, Алим{'\n'}Джолдаспаев 👋</h1>
-        </div>
-        
-        {/* Первый ряд: Заказы (950px) + Профиль (450px) */}
-        <div className={styles.firstRow}>
-          <div className={styles.ordersContainer}>
-            <Suspense fallback={<div className={styles.skeleton}>Загрузка заказов...</div>}>
-              <DashboardOrders />
-            </Suspense>
-          </div>
-          <Suspense fallback={<div className={styles.skeleton}>Загрузка профиля...</div>}>
-            <ProfileSection user={user} />
-          </Suspense>
-        </div>
-        
-        {/* Второй ряд: Трансляция (450px) + Платежи (950px) */}
-        <div className={styles.secondRow}>
-          <Suspense fallback={<div className={styles.skeleton}>Загрузка трансляции...</div>}>
-            <StreamSection />
-          </Suspense>
-          <Suspense fallback={<div className={styles.skeleton}>Загрузка платежей...</div>}>
-            <PaymentsSection />
-          </Suspense>
-        </div>
+        <ProfileLarge />
       </div>
     </div>
   );

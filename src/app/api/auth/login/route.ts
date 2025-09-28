@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import database from '@/services/database';
 import { LoginForm, ApiResponse } from '@/types';
 
 export async function POST(request: NextRequest) {
@@ -15,38 +14,30 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // Поиск пользователя
-    const user = database.getUserByEmail(email);
-    if (!user) {
-      return NextResponse.json<ApiResponse>({
-        success: false,
-        error: 'Пользователь не найден'
-      }, { status: 401 });
-    }
+    // Моковая авторизация - принимаем любой email/пароль
+    const mockUser = {
+      id: 1,
+      login: 'alim',
+      email: email,
+      firstName: 'Алим',
+      lastName: 'Джолдаспаев',
+      phone: '+7 (123) 456-78-90',
+      address: 'Алматы, Казахстан',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
 
-    // Проверка пароля с bcrypt
-    const isPasswordValid = await database.verifyPassword(password, user.password);
-    if (!isPasswordValid) {
-      return NextResponse.json<ApiResponse>({
-        success: false,
-        error: 'Неверный пароль'
-      }, { status: 401 });
-    }
-
-    // Успешная авторизация
-    const { password: _, ...userWithoutPassword } = user;
-    
     return NextResponse.json<ApiResponse>({
       success: true,
-      data: userWithoutPassword,
-      message: 'Успешная авторизация'
+      data: mockUser,
+      message: 'Авторизация успешна'
     });
 
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json<ApiResponse>({
       success: false,
-      error: 'Внутренняя ошибка сервера'
+      error: 'Ошибка авторизации'
     }, { status: 500 });
   }
 }

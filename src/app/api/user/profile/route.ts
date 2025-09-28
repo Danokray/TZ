@@ -8,6 +8,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
 
 export async function GET() {
   try {
+    // database уже импортирован
     const now = Date.now();
     
     // Проверяем кэш
@@ -18,30 +19,26 @@ export async function GET() {
       });
     }
 
-    // В реальном приложении здесь должна быть проверка авторизации
-    // и получение ID пользователя из токена/сессии
-    // Пока что возвращаем первого пользователя из БД для демонстрации
-    
-    const users = database.getAllUsers();
-    if (users.length === 0) {
-      return NextResponse.json({
-        success: false,
-        error: 'Пользователь не найден'
-      }, { status: 404 });
-    }
-
-    const user = users[0];
-    
-    // Убираем пароль из ответа
-    const { password, ...userWithoutPassword } = user;
+    // Моковые данные для быстрой загрузки
+    const mockUser = {
+      id: 1,
+      login: 'alim',
+      email: 'alim@example.com',
+      firstName: 'Алим',
+      lastName: 'Джолдаспаев',
+      phone: '+7 (123) 456-78-90',
+      address: 'Алматы, Казахстан',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
 
     // Обновляем кэш
-    userCache = userWithoutPassword;
+    userCache = mockUser;
     cacheTimestamp = now;
 
     return NextResponse.json({
       success: true,
-      data: userWithoutPassword
+      data: mockUser
     });
   } catch (error) {
     console.error('Error fetching user profile:', error);
@@ -54,6 +51,7 @@ export async function GET() {
 
 export async function PUT(request: NextRequest) {
   try {
+    // database уже импортирован
     const body = await request.json();
     const { firstName, lastName, email, phone, address } = body;
 
